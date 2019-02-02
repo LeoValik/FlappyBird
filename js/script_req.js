@@ -8,6 +8,7 @@ $(function () {
         score = $('#score'),
         speed_span = $('#speed'),
         restart_btn = $('#restart_btn'),
+        best = $('#best'),
     //сохраним начальные настройки
         container_width = parseInt(container.width()),
         container_height = parseInt(container.height()),
@@ -92,11 +93,13 @@ $(function () {
     function stop_the_game() {
         cancelAnimationFrame(anim_id);
         game_over = true;
+        //checkTheBestScore();
         restart_btn.slideDown();
     };
     restart_btn.click(function () {
         location.reload();
     });
+
 
     function collision($div1, $div2) {
         let x1 = $div1.offset().left,
