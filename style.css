@@ -59,5 +59,17 @@ body {
     display: none;
 }
 #help{
-	text-align: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+#help::before {
+    content: 'Управление: Используй ПРОБЕЛ чтобы управлять птичкой';
+}
+.ui-loader {
+    display: none;
+}
+@media (max-width: 1199px) and (max-width: 768px) {
+    #help::before {
+        content: "Управление: ТАПАЙ на область красного прямоугольника, чтобы управлять птичкой";
+    }
 }

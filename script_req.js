@@ -55,6 +55,7 @@ $(function () {
         anim_id = requestAnimationFrame(the_game);
     };
     anim_id = requestAnimationFrame(the_game);
+    // Для декстопа
     $(document).on('keydown', function (e) {
         let key = e.keyCode;
         if (key === 32 && go_up === false && game_over === false) {
@@ -62,27 +63,37 @@ $(function () {
         }
     });
     $(document).on('keyup', function (e) {
-        let key = e.keyCode;
-        if (key === 32) {
-            cancelAnimationFrame(go_up);
-            go_up = false;
-        }
+         let key = e.keyCode;
+         if (key === 32) {
+                cancelAnimationFrame(go_up);
+                go_up = false;
+         }
+    });
+    // Для планшетов и мобильных устройств
+    $(document).on('vclick', () => { 
+        if (go_up === false && game_over === false) {
+            go_up = requestAnimationFrame(up);
+            setTimeout(() => {
+                cancelAnimationFrame(go_up); 
+                go_up = false;
+            }, 80);
+        }  
     });
 
     function go_down() {
         bird.css('top', parseInt(bird.css('top')) + 3);
-    }
+    };
 
     function up() {
         bird.css('top', parseInt(bird.css('top')) - 6);
         go_up = requestAnimationFrame(up);
-    }
+    };
 
     function stop_the_game() {
         cancelAnimationFrame(anim_id);
         game_over = true;
         restart_btn.slideDown();
-    }
+    };
     restart_btn.click(function () {
         location.reload();
     });
@@ -102,5 +113,5 @@ $(function () {
             r2 = x2 + w2;
         if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
         return true;
-    }
+    };
 });
