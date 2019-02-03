@@ -56,6 +56,19 @@ $(function () {
         anim_id = requestAnimationFrame(the_game);
     };
     anim_id = requestAnimationFrame(the_game);
+    // Проверям, нулевой ли лучший результат
+    (function bestResult() {
+        let best;
+        if(localStorage.getItem('thebest') === null) {
+            localStorage.setItem('thebest', "0");
+            //best = 0;
+            document.getElementById('best').innerHTML = '0';
+          } else {
+            best = localStorage.getItem('thebest');
+            document.getElementById('best').innerHTML = best;
+          }
+          return best;
+    })();
     // Для декстопа
     $(document).on('keydown', function (e) {
         let key = e.keyCode;
@@ -93,13 +106,25 @@ $(function () {
     function stop_the_game() {
         cancelAnimationFrame(anim_id);
         game_over = true;
-        //checkTheBestScore();
+        checkTheBestScore();
         restart_btn.slideDown();
     };
     restart_btn.click(function () {
         location.reload();
     });
 
+
+    function checkTheBestScore() {
+        let userScore = document.getElementById('score').value;
+        let bestScore = localStorage.getItem('thebest');
+        if(userScore > bestScore) {
+            bestScore = localStorage.setItem("thebest", userScore);
+            document.getElementById("best").innerHTML = bestScore;
+        } else {
+            let best = localStorage.getItem('thebest');
+            document.getElementById('best').innerHTML = best;
+        }
+    }
 
     function collision($div1, $div2) {
         let x1 = $div1.offset().left,
