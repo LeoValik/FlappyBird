@@ -69,21 +69,7 @@ $(function () {
           }
           return best;
     })();
-    // Для декстопа
-    $(document).on('keydown', function (e) {
-        let key = e.keyCode;
-        if (key === 32 && go_up === false && game_over === false) {
-            go_up = requestAnimationFrame(up);
-        }
-    });
-    $(document).on('keyup', function (e) {
-         let key = e.keyCode;
-         if (key === 32) {
-                cancelAnimationFrame(go_up);
-                go_up = false;
-         }
-    });
-    // Для планшетов и мобильных устройств
+    // Управление птичкой на клик
     $(document).on('vclick', () => { 
         if (go_up === false && game_over === false) {
             go_up = requestAnimationFrame(up);
@@ -106,25 +92,26 @@ $(function () {
     function stop_the_game() {
         cancelAnimationFrame(anim_id);
         game_over = true;
-        checkTheBestScore();
+        // Проверка результата
+        checkTheBestResult();
         restart_btn.slideDown();
     };
-    restart_btn.click(function () {
+    /*restart_btn.click(function () {
         location.reload();
-    });
+    });*/
+    restart_btn.click(() => location.reload());
 
-
-    function checkTheBestScore() {
-        let userScore = document.getElementById('score').value;
+    function checkTheBestResult() {
+        let userScore = document.getElementById('score').textContent;
         let bestScore = localStorage.getItem('thebest');
         if(userScore > bestScore) {
             bestScore = localStorage.setItem("thebest", userScore);
-            document.getElementById("best").innerHTML = bestScore;
+            document.getElementById("best").innerHTML = localStorage.getItem('thebest');
         } else {
-            let best = localStorage.getItem('thebest');
-            document.getElementById('best').innerHTML = best;
+            document.getElementById("best").innerHTML = localStorage.getItem('thebest');
         }
-    }
+    };
+
 
     function collision($div1, $div2) {
         let x1 = $div1.offset().left,
